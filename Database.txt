@@ -1,15 +1,23 @@
+drop table if exists Transaction;
 create table Transaction (
 transid int NOT NULL,
 trtype varchar(10),
 Tramt FLOAT,
+tdesc varchar(30),
 trdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 currbalance FLOAT,
 PRIMARY KEY(transid)
 );
 
-INSERT INTO Transaction values(1,'Cr',100,DEFAULT,1000);
-INSERT INTO Transaction values(2,'Cr',200,DEFAULT,1000);
+INSERT INTO Transaction values(1,'Cr',100,'family',DEFAULT,1000);
+INSERT INTO Transaction values(2,'Cr',200,'loan',DEFAULT,1000);
 
+
+drop table if exists Passbook;
+create table Passbook (
+transid int,
+FOREIGN KEY(transid) REFERENCES Transaction(transid)
+);
 
 create table Passbook (
 transid int,
