@@ -1,0 +1,35 @@
+create table project_transaction(
+transid int NOT NULL,
+DbAcc int,
+CrAcc int,
+trtype varchar(10),
+Tramt FLOAT,
+tdesc varchar(30),
+trdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+DbAccCurrbalance FLOAT,
+CrAccCurrbalance FLOAT,
+PRIMARY KEY(transid),
+FOREIGN KEY(DbAcc) REFERENCES project_account(account_number)
+);
+
+
+create table project_account(
+account_number int NOT NULL UNIQUE,
+AccName varchar(30),
+current_balance float
+);
+
+
+INSERT INTO project_account values(14,'Nishanth',100);
+INSERT INTO project_account values(23,'Rohith',100);
+
+
+INSERT INTO project_transaction values(1,14,23,'db',100,'family','2022-04-01 00:00:00',900,1100);
+INSERT INTO project_transaction values(2,23,14,'cr',100,'family','2022-04-10 00:00:00',1000,1000);
+INSERT INTO project_transaction values(3,14,23,'cr',10000,'family','2022-04-10 00:00:00',1000,1000);
+
+
+
+
+SELECT * FROM Transaction T,Account A
+WHERE (T.debitAccountNumber=A.accountNumber or T.creditAccountNumber=A.accountNumber) and (T.trdate BETWEEN fromDateCorrect AND toDateCorrect )
