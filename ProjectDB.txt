@@ -1,0 +1,48 @@
+create table project_transaction(
+transid int NOT NULL,
+DbAcc int,
+CrAcc int,
+trtype varchar(10),
+Tramt FLOAT,
+tdesc varchar(30),
+trdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+DbAccCurrbalance FLOAT,
+CrAccCurrbalance FLOAT,
+PRIMARY KEY(transid),
+FOREIGN KEY(DbAcc) REFERENCES project_account(account_number)
+);
+
+
+create table project_account(
+account_number int NOT NULL UNIQUE,
+AccName varchar(30),
+current_balance float
+);
+
+
+INSERT INTO project_account values(1005,'Nishanth',10000);
+INSERT INTO project_account values(1001,'Veni',10000);
+INSERT INTO project_account values(1002,'Kanwar',20000);
+INSERT INTO project_account values(1003,'Shashi Bamne',50000);
+INSERT INTO project_account values(1004,'Ayan',60000);
+
+
+
+INSERT INTO project_transaction values(1,1003,1002,'Transfer',10000,'friends','2022-03-21 20:25:40',40000,30000);
+INSERT INTO project_transaction values(2,1004,1003,'Transfer',20000,'friends','2022-03-25 14:25:40',40000,60000);
+INSERT INTO project_transaction values(3,1003,1001,'Transfer',50000,'friends','2022-04-21 20:15:40',10000,60000);
+
+INSERT INTO project_transaction values(4,1001,1005,'Transfer',50000,'friends','2022-04-21 20:25:40',10000,60000);
+INSERT INTO project_transaction values(5,1005,1004,'Transfer',5000,'friends',DEFAULT,55000,45000);
+
+
+SELECT * FROM project_Transaction T where ( t.dbacc=1003 or cracc=1003) and (t.trdate between '2022-01-01 00:00:00' and  '2022-04-22 00:00:00' ) order by t.trdate
+
+
+
+select * from project_transaction t where (t.dbacc=1001 or t.cracc=1001)
+
+
+
+SELECT * FROM Transaction T,Account A
+WHERE (T.debitAccountNumber=A.accountNumber or T.creditAccountNumber=A.accountNumber) and (T.trdate BETWEEN fromDateCorrect AND toDateCorrect )
